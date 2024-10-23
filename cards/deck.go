@@ -5,11 +5,13 @@ import (
 	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
-// Create a new type of eck
+// Create a new type called deck deck is equal to an array of strings
 type deck []string
 
+// Expect a deck as output
 func newDeck() deck {
 	cards2 := deck{}
 
@@ -27,6 +29,7 @@ func newDeck() deck {
 	return cards2
 }
 
+// This function can be called to the deck type lide deck.print:
 func (d deck) print_cards() {
 	for _, card := range d {
 		fmt.Println(card)
@@ -68,9 +71,17 @@ func newDeckFromFile(filename string) deck {
 }
 
 func (d deck) shuffledeck() {
+
+	//Return time as a int64 value with that you create a source
+	source := rand.NewSource(time.Now().UnixNano())
+
+	//With a source you can create a random number
+	//Rand new ewturns an type rand so r can use Intn
+	r := rand.New(source)
+
 	for index, _ := range d {
 
-		random_number := rand.Intn(len(d) - 1)
+		random_number := r.Intn(len(d) - 1)
 
 		d[index], d[random_number] = d[random_number], d[index]
 	}
