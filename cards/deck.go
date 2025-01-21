@@ -52,6 +52,7 @@ func (d deck) saveToFile(filename string) error {
 	return os.WriteFile(filename, []byte(d.deckToString()), 066)
 }
 
+// expect a string, returns a deck
 func newDeckFromFile(filename string) deck {
 	bs, err := os.ReadFile(filename)
 
