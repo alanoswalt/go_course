@@ -7,6 +7,8 @@ import (
 	"os"
 )
 
+type logWriter struct{}
+
 // How to make an http request
 func main() {
 	resp, err := http.Get("http://google.com")
@@ -30,5 +32,14 @@ func main() {
 	//Different way to read, smaller
 	//In the line bellow we use the writer interface
 	//Takes data and sends some form of output
-	io.Copy(os.Stdout, resp.Body)
+	//io.Copy(os.Stdout, resp.Body)
+
+	lw := logWriter{}
+	io.Copy(lw, resp.Body)
+}
+
+func (logWriter) Write(bs []byte) (int, error) {
+	fmt.Println(string(bs))
+	fmt.Println("Just wrote this many bytes:", len(bs))
+	return len(bs), nil
 }
